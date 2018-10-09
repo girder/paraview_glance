@@ -39,4 +39,6 @@ export default {
 <style lang="stylus">
 .v-overlay--active:before
   opacity .82 !important
+.v-dialog
+  background-color black
 </style>
