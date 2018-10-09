@@ -26,5 +26,5 @@ export const JobStatus = {
   CANCELED: 5,
 };
 
-export const API_ROOT = process.env.NODE_ENV === 'production' ? '/api/v1' : '//rig:8080/api/v1';
+export const API_ROOT = process.env.NODE_ENV === 'production' ? '/api/v1' : '//localhost:8080/api/v1';
 export const UPLOAD_CHUNK_SIZE = 1024 * 1024 * 64;
