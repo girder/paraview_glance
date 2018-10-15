@@ -2,7 +2,8 @@
 v-dialog(v-model="dialog", :width="width")
   template(slot="activator")
     slot(name="activator")
-  iframe(v-if="dialog"
+  iframe.responsive(
+      v-if="dialog"
       :src="src",
       :width="width",
       :height="height",
@@ -13,6 +14,7 @@ v-dialog(v-model="dialog", :width="width")
 </template>
 
 <script>
+
 export default {
   props: {
     src: {
@@ -38,7 +40,14 @@ export default {
 
 <style lang="stylus">
 .v-overlay--active:before
-  opacity .82 !important
+  opacity .82
 .v-dialog
   background-color black
+  @media (max-width: 600px)
+    .responsive
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
 </style>

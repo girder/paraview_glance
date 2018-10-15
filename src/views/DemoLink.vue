@@ -6,8 +6,10 @@ v-card.flexcard(width="400px")
   v-card-text.grow.body-1.py-2.px-3 {{ description }}
   v-card-actions
     v-spacer
-    video-dialog(v-if="enabled && video && !isMobile",
-        :src="video.src", :width="video.width", :height="video.height")
+    video-dialog(v-if="enabled && video",
+        :src="video.src",
+        :width="video.width",
+        :height="video.height")
       v-btn.mr-1(flat, slot="activator", color="primary") {{ buttonText }}
     v-btn.mr-1(v-else-if="enabled && (to || href)",
         color="primary",
@@ -18,14 +20,12 @@ v-card.flexcard(width="400px")
 </template>
 
 <script>
-import { mobileChecker } from '../utils/mixins.js';
 import VideoDialog from './VideoDialog.vue';
 
 export default {
   components: {
     VideoDialog,
   },
-  mixins: [mobileChecker],
   props: {
     title: {
       type: String,
