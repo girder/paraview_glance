@@ -1,16 +1,19 @@
 <template lang="pug">
-v-dialog(v-model="dialog", :width="width")
+v-dialog(v-model="dialog",
+    content-class="demo-video-dialog"
+    :width="iframeWidth")
   template(slot="activator")
     slot(name="activator")
-  iframe.responsive(
-      v-if="dialog"
-      :src="src",
-      :width="width",
-      :height="height",
-      frameborder="0",
-      webkitallowfullscreen,
-      mozallowfullscreen,
-      allowfullscreen)
+  v-card.video-dialog(color="black", v-resize="resize")
+    iframe.responsive(
+        v-if="dialog"
+        :src="src",
+        :width="iframeWidth",
+        :height="iframeHeight",
+        frameborder="0",
+        webkitallowfullscreen,
+        mozallowfullscreen,
+        allowfullscreen)
 </template>
 
 <script>
@@ -33,21 +36,31 @@ export default {
   data() {
     return {
       dialog: false,
+      iframeWidth: this.width,
+      iframeHeight: this.height,
     };
+  },
+  methods: {
+    resize() {
+      const docWidth = document.documentElement.clientWidth;
+      const docHeight = document.documentElement.clientHeight;
+      const aspect = this.width / this.height;
+
+      if ((docWidth / this.width) < (docHeight / this.height)) {
+        this.iframeWidth = ((docWidth > this.width) ? this.width : docWidth);
+        this.iframeHeight = this.iframeWidth / aspect;
+      } else {
+        this.iframeHeight = ((docHeight > this.height) ? this.height : docHeight);
+        this.iframeWidth = this.iframeHeight * aspect;
+      }
+    },
   },
 };
 </script>
 
 <style lang="stylus">
-.v-overlay--active:before
-  opacity .82
-.v-dialog
-  background-color black
-  @media (max-width: 600px)
-    .responsive
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+.demo-video-dialog.v-dialog
+    margin 0px
+    &:not(.v-dialog--fullscreen)
+      max-height inherit
 </style>
